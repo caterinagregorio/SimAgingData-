@@ -9,3 +9,110 @@ output: pdf_document
 knitr::opts_chunk$set(echo = F,warning = F,message=F)
 ```
 
+# Data and organization
+
+## Schematic description of the scenarios
+
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| **Scenario number** | **Folder name**\*    | **Number of disease patterns** | **Number of individuals** | **Observation scheme**      | **Under reporting** | **Released** |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 1                   | schema_xa_3000       | 2                              | 3 000                     | Regular, 2 years (A)        | No                  | ``` latex    |
+|                     |                      |                                |                           |                             |                     | $\checkmark$ |
+|                     |                      |                                |                           |                             |                     | ```          |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 2                   | schema_xb_3000       | 2                              | 3 000                     | Semi-regular, 3/5 years (B) | No                  |              |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 3                   | schema_xc_3000       | 2                              | 3 000                     | Irregular (C)               | No                  |              |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 4                   | schema_xa_under_3000 | 2                              | 3 000                     | Regular, 2 years (A)        | Yes                 |              |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 5                   | schema_xb_under_3000 | 2                              | 3 000                     | Semi-regular, 3/5 years (B) | Yes                 |              |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 6                   | schema_xc_under_3000 | 2                              | 3 000                     | Irregular (C)               | Yes                 |              |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 7                   | schema_xa_1000       | 2                              | 10 000                    | Regular, 2 years (A)        | No                  |              |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 8                   | schema_xb_1000       | 2                              | 10 000                    | Semi-regular, 3/5 years (B) | No                  |              |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 9                   | schema_xc_1000       | 2                              | 10 000                    | Irregular (C)               | No                  |              |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 10                  | schema_xa_under_1000 | 2                              | 10 000                    | Regular, 2 years (A)        | Yes                 |              |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 11                  | schema_xb_under_1000 | 2                              | 10 000                    | Semi-regular, 3/5 years (B) | Yes                 |              |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+| 12                  | schema_xc_under_1000 | 2                              | 10 000                    | Irregular (C)               | Yes                 |              |
++---------------------+----------------------+--------------------------------+---------------------------+-----------------------------+---------------------+--------------+
+
+\*100 datasets corresponding to different pseudo-random generations of the data are contained in each folder.
+
+## Description of the variables contained in each dataset
+
+## Description of the observation schemes
+
+-   **Schema A- Regular 2 years:** visits are every two years from baseline until death or end of the observation due to loss-to-follow-up or administrative end of the study. The median number of visits per subject is 5 (IQR: 3-7).
+
+-   **Schema B- Semi-Regular similar to SNAC-K:** visits are every 6 years from baseline if the subject is 60-78 and every 3 years if they are 78+ until death or end of the observation due to loss-to-follow-up or administrative end of the study. The median number of visits per subject is 2 (IQR: 2-3).
+
+-   **Schema C - Irregular:** visits are at irregular intervals and they are different among subjects. The median number of visits per subject is 6 (IQR: 3-10).
+
+    ## Definition of under-reporting
+
+    Underreporting was defined as a random selection of diagnoses for five pre-specified diseases (Chronic Kidney Disease, Dementia, Deafness/Hearing Loss, Depression, and Osteoarthritis/Other Degenerative Joint Diseases) that were not detected during a visit. For simplicity, the probability of non-detection was kept constant across both time and diseases.
+
+# Data generating Mechanism
+
+For each dataset $n$ ($n = 1,2, \dots, N$) and for each subject $k$ ($k =1,2,\dots, N_{\text{sim}}$):
+
+1.  Draw `cov1` from a binomial distribution:\
+    $cov1_k \sim \text{Binomial}(p=0.45)$.
+
+2.  Draw `cov2` from a binomial distribution:\
+    $cov2_k \sim \text{Binomial}(p=0.15)$.
+
+3.  Draw age at entry from a truncated gamma distribution with shape 0.9 and rate 0.15, constrained between 60 and 96:\
+    $A_k \sim \text{Gamma}(\alpha = 0.9, \beta = 0.15), \quad 60 \leq A_k \leq 96$.
+
+4.  Draw time in the study from a uniform distribution:\
+    $T_k \sim \text{Uniform}(0.5, 20)$.
+
+5.  Simulate cluster at entry in the study and then simulate the diseases at baseline conditioned on the clusters to which they belong. For each disease, draw from a binomial distribution with probability $p$ from the latent class model (i.e., the probability of developing a certain disease given a multimorbidity cluster and the age at entry).
+
+6.  Simulate latent multimorbidity cluster trajectories using a multi-state model with a Gompertz hazard (as described above), adjusted for the three binary covariates .
+
+7.  Simulate the prevalent diseases (among those the patient has not yet developed), conditioned on the latent cluster towards which the patient is transitioning. If the next state of transition is Death, then diseases are simulated based on the current state.
+
+8.  Simulate the age of onset for each developed disease from a truncated beta distribution based on disease-specific parameters. The distribution is truncated so that the age of onset falls between the transition from the previous state to the following. If the computed age exceeds the age of death, the corresponding simulated disease is discarded.
+
+9.  Simulate rare diseases independently of the states to which patients belong but dependently on the patient’s age. Rare diseases are drawn from a binomial distribution with parameter $p$ equal to the prevalence of such diseases stratified by age, as reported in Appendix A.
+
+10. Remove subjects who do not present multimorbidity at baseline.
+
+11. Compute the age of exit from the study as the minimum between the age of death and the sum of the age at entry and time in the study.
+
+12. Eliminate data after the age of exit (in the case of patients who leave the study before dying).
+
+## Study type
+
+From the diseases' generating mechanism described above the underlying "true" datasets are obtained (ground truth). Subsequently, the study design schemes (population study or irregular visits) are applied in order to transform the data in what would be observed in reality when collecting multimorbidity data.
+
+Since exact time of diseases onset is usually unknown in reality, the information about when the diseases are developed for each patient is substituted by binary coded variables with value 1 if the patient has developed the disease before the time $t$ of follow-up or 0 otherwise. As a result, information about onset of disease is not present in the final datasets.
+
+In the case of population study the time of visits $t$ are deterministically simulated starting from the age of entry in the study, according to an observation scheme with follow up visits every 6 years for patients of age 60-78 and every 3 years for patient of age 78+.
+
+While in the case of irregular visits, the time of follow-ups $t$ are simulated from a distribution, starting from the age of exit and until the age of death or drop out. The distribution is a Weibull with parameters shape = 5 and scale = 0.4; $t_{k} \sim \text{Weibull} (5, 0.4)$.
+
+## Example: population-based dataset
+
+$dataset\_id$ identify the n-th dataset, with ($n = 1,2, \dots, N$). N = 100
+
+$dm\_sex$ indicates the sex, with 1 corresponding to female and 2 to male.
+
+$educ\_el$ is a binary coded indicator for the level of education of the subject. It assumes value 1 if the highest education level is elementary education, 0 otherwise (higher education levels)
+
+Below the visualization of the first columns and row of the first simulated dataset, following the population-based scheme and up to 3000 simulated participants.
+
+```{r data, echo=FALSE}
+load("Simulation/Simulation Outputs/pop_study_B_100_3000.RData")
+pop_1 <- pop %>% filter(dataset_id==1) %>% dplyr::select(-MP_sim, -base_MP,-MP_base, -lag_age)
+print(pop_1)
+```
