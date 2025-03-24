@@ -1,0 +1,11 @@
+---
+title: "Documentation simulated data MM trajectories v1"
+author: "Caterina Gregorio, Valentina Manzoni"
+date: "March 2025"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F,warning = F,message=F)
+```
+

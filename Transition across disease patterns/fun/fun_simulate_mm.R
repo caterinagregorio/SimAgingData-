@@ -25,7 +25,7 @@ sim_mm_traj <- function(n,N,scenario_obj,seed,scenario){
   require(tictoc)
   require(parallel)
   
-  source("fun//utils_microsim.R")
+  source("Transition across disease patterns/fun/utils_microsim.R")
   
 
   set.seed(seed)

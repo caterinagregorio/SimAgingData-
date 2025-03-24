@@ -15,7 +15,7 @@ library(future.apply)
 # age_tr if more than one value is passed to obs_t_int then it needs to contain one value indicating after which age the follow up period changes
 
 
-popbased_study <- function (data, sim_MP, underreporting = FALSE, underrep_dis = NULL, underrep_prob = NULL, obs_t_int, age_tr= NA){
+popbased_study <- function (data, sim_MP, obs_t_int, age_tr= NA){
   # filter data to keep observations according to obs_t_init
   data <- as.data.frame(data)
   # DISCRETIZATION : one row per follow up 
@@ -76,44 +76,7 @@ popbased_study <- function (data, sim_MP, underreporting = FALSE, underrep_dis =
                   ~ ifelse(. <= age, 1, 0), 
                   .names = "{sub('Age_', '', .col)}"))
   data_long <- data_long %>% dplyr::select(-all_of(disease_columns))
-  
-  #diseases_list <-sub("^Age_", "", disease_columns)
-  #data_long <- create_age_group(data_long, diseases_list)
-  
-  if (underreporting){
-    if (length(underrep_dis)!=length(underrep_prob)){
-      stop("ERROR. underrep_dis and underrep_prob must have same number of element. 
-            Specify one value of underrep_prob per disease passed to underrep_dis.")
-    }
-    # for each disease in underrep_dis simulate from a bernuolli (underrep_prob[i])
-    # if outcome = 1 -> disease underreported, then removed from dataset
-    for (i in seq_along(underrep_dis)) {
-      disease <- underrep_dis[i]
-      prob <- underrep_prob[i]
-      
-      patients_with_disease <- unique(data_long$patient_id[data_long[[disease]] == 1])
-      
-      # Generate underreporting flags only for patients with the disease
-      if (length(patients_with_disease) > 0) {
-        underreport_flags <- rbinom(length(patients_with_disease), 1, prob)
-        
-        for (j in seq_along(patients_with_disease)) {
-          pat_id <- patients_with_disease[j]
-          indices <- which(data_long$patient_id == pat_id) 
-          
-          if (length(indices) > 0) {
-            data_long$ndis[indices] <- data_long$ndis[indices] - 1 # decrease ndis whenever there's an underreported disease
-            # Update the disease column while keeping NAs
-            data_long[[disease]][indices] <- ifelse(
-              is.na(data_long[[disease]][indices]), 
-              NA,  # Keep NA
-              ifelse(data_long[[disease]][indices] == 1 & underreport_flags[j] == 1, 0, 1)
-            )
-          }
-        }
-      }
-    }
-  }  
+
   
   data_long[is.na(data_long)] <- 0
   return(data_long)
@@ -172,7 +135,7 @@ calculate_visit_rate <- function(base_rate=NULL, age, sex, socio_ec, num_disease
   return(visit_rate)
 }
 
-rv_study_new <- function(data, sim_MP, underreporting = FALSE, underrep_dis = NULL, underrep_prob = NULL, base_rate=NULL){
+iv_study <- function(data, sim_MP, underreporting = FALSE, underrep_dis = NULL, underrep_prob = NULL, base_rate=NULL){
   
   data <- as.data.frame(data)
   # simulate from a weibull
