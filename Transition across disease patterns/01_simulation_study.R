@@ -16,7 +16,7 @@ source("Transition across disease patterns/fun/fun_simulate_mm.R")
 source("Transition across disease patterns/fun/study_design_fun.R")
 
 # save simulation results 
-output_folder <-paste0("Simulation Outputs")
+output_folder <-paste0("Transition across disease patterns/Simulation Outputs")
 
 if (!dir.exists(output_folder)) {
   dir.create(output_folder)
