@@ -52,6 +52,7 @@ sim_mm_traj <- function(n,N,scenario_obj,seed,scenario){
                        id=rep(1:n,times=N),
                        educ_el=rbinom(n*N,1,prob=0.15),
                        dm_sex=rbinom(n*N,1,prob=0.45),
+                       cov3=rbinom(n*N,1,prob=0.30),
                        grp_id=rep(1:N,each=n),
                        Age_entry=pmin(rgamma(n*N, shape=0.9, rate = 0.15) + 60,96),
                        time_in_study= runif(n*N,0.5,20))#to modify according schema
