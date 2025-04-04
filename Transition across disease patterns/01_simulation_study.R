@@ -118,11 +118,11 @@ save(pop, file = paste0(output_folder, "/", "pop_study_",scenario,"_"
 # years in between follow-ups and corresponding age threshold for population based scenario
 # patients with age <= 78 years have follow ups every 6 years, > 78 every 3 years
 
-age_tr <- 78
-obs_t_int <- c(2,2)
+
+obs_t_int <- 2
 
 pop2 <- popbased_study(simdata2_3000,simlongdata2_3000,
-                       obs_t_int = obs_t_int, age_tr = age_tr)
+                       obs_t_int = obs_t_int)
 
 save(pop2, file = paste0(output_folder, "/", "pop_study_2yr",scenario,"_"
                          ,as.character(N),"_",as.character(nsim),".RData"))

@@ -1,6 +1,6 @@
 
 source("Transition across disease patterns/utils/prepare_csv.R")
-
+dir.create(paste0("Transition across disease patterns/Simulated Data"))
 
 load("Transition across disease patterns/Simulation Outputs/pop_study_2yr2_100_3000.RData")
 prepare_csv(pop2,100,"schema_xa_3000")
@@ -21,10 +21,6 @@ prepare_csv(pop_under,100,"schema_xb_under_3000")
 
 load("Transition across disease patterns/Simulation Outputs/pop_study_iv_under2_100_3000.RData")
 prepare_csv(pop_iv_under,100,"schema_xc_under_3000")
-
-
-
-
 
 load("Transition across disease patterns/Simulation Outputs/pop_study_2yr2_100_10000.RData")
 prepare_csv(pop2,100,"schema_xa_10000")

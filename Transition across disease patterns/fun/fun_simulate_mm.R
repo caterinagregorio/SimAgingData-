@@ -66,7 +66,7 @@ sim_mm_traj <- function(n,N,scenario_obj,seed,scenario){
     covs$educ_el_mm=covs$educ_el
     covs$dm_sex_mm=covs$dm_sex
     
-    f <- "patient_id+grp_id+educ_el+dm_sex+educ_el_mm+dm_sex_mm+Age_entry+initial_state+time_in_study+id"
+    f <- "patient_id+grp_id+educ_el+dm_sex+educ_el_mm+dm_sex_mm+cov3+Age_entry+initial_state+time_in_study+id"
     patients <- fix_subjects(covs,f = f,nsim =n*N)
     # Scenario
     strategies <- data.frame(strategy_id = 1)
@@ -157,7 +157,7 @@ sim_mm_traj <- function(n,N,scenario_obj,seed,scenario){
       dplyr::group_by(dataset_id,patient_id) %>% 
       mutate(Age_death=max(time_stop[to==ncol(tmat)],na.rm = T),
              Age_death=na_if(Age_death,-Inf)) %>% 
-      dplyr::select(dataset_id,patient_id,Age,MP,Age_death,Age_entry,educ_el,dm_sex,Age_entry,time_in_study)
+      dplyr::select(dataset_id,patient_id,Age,MP,Age_death,Age_entry,educ_el,dm_sex,cov3,Age_entry,time_in_study)
       
     
     
