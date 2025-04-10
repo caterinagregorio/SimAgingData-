@@ -2,7 +2,9 @@
 title: "Documentation simulated data MM trajectories v1"
 author: "Caterina Gregorio, Valentina Manzoni"
 date: "April 2025"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -14,7 +16,7 @@ knitr::opts_chunk$set(echo = F,warning = F,message=F)
 ## Schematic description of the scenarios
 
 |                     |                      |                                |                           |                             |                     |              |
-|:-------:|:------------------------------------:|:-----------------------------------------------------------:|:---------------------------------------:|:------------------------------------------:|:---------------------------------------:|:----------------------------:|
+|:---------:|:----------------------:|:---------:|:---------:|:---------:|:---------:|:---------:|
 | **Scenario number** |  **Folder name**\*   | **Number of disease patterns** | **Number of individuals** |   **Observation scheme**    | **Under reporting** | **Released** |
 |          1          |    schema_xa_3000    |               2                |           3 000           |    Regular, 2 years (A)     |         No          | $\checkmark$ |
 |          2          |    schema_xb_3000    |               2                |           3 000           | Semi-regular, 3/5 years (B) |         No          | $\checkmark$ |
@@ -73,43 +75,46 @@ The structure of the datasets are coherent across scenarios. Each dataset is org
 
 For each dataset $n$ ($n = 1,2, \dots, N$) and for each subject $k$ ($k =1,2,\dots, N_{\text{sim}}$):
 
-***Population composition***
+### ***Population composition***
 
-1.  Draw `cov1` from a binomial distribution:\
+-   Draw `cov1` from a binomial distribution:\
     $cov1_k \sim \text{Binomial}(p=0.45)$.
 
-2.  Draw `cov2` from a binomial distribution:\
+-   Draw `cov2` from a binomial distribution:\
     $cov2_k \sim \text{Binomial}(p=0.15)$.
 
-3.  Draw age at entry from a truncated gamma distribution with shape 0.9 and rate 0.15, constrained between 60 and 96:\
-    $A_k \sim \text{Gamma}(\alpha = 0.9, \beta = 0.15), \quad 60 \leq A_k \leq 96$.
+-   Draw `cov3` from a binomial distribution:\
+    $cov3_k \sim \tex{Binomial}(p=0.30)$.
 
-    ***MM patterns, chronic diseases and survival***
+Draw age at entry from a truncated gamma distribution with shape 0.9 and rate 0.15, constrained between 60 and 96:\
+$A_k \sim \text{Gamma}(\alpha = 0.9, \beta = 0.15), \quad 60 \leq A_k \leq 96$.
 
-4.  Simulate cluster at entry in the study and then simulate the diseases at baseline conditioned on the clusters to which they belong. For each disease, draw from a binomial distribution with probability $p$ from the latent class model (i.e., the probability of developing a certain disease given a multimorbidity cluster and the age at entry).
+### ***MM patterns, chronic diseases and survival***
 
-5.  Simulate latent multimorbidity cluster trajectories using a multi-state model with a Gompertz hazard, adjusted for the three binary covariates .
+-   Simulate cluster at entry in the study and then simulate the diseases at baseline conditioned on the clusters to which they belong. For each disease, draw from a binomial distribution with probability $p$ from the latent class model (i.e., the probability of developing a certain disease given a multimorbidity cluster and the age at entry).
 
-6.  Simulate the prevalent diseases (among those the patient has not yet developed), conditioned on the latent cluster towards which the patient is transitioning. If the next state of transition is Death, then diseases are simulated based on the current state.
+-   Simulate latent multimorbidity cluster trajectories using a multistate model with a Gompertz hazard, adjusted for the three binary covariates.
 
-7.  Simulate the age of onset for each developed disease from a truncated beta distribution based on disease-specific parameters. The distribution is truncated so that the age of onset falls between the transition from the previous state to the following. If the computed age exceeds the age of death, the corresponding simulated disease is discarded.
+-   Simulate the prevalent diseases (among those the patient has not yet developed), conditioned on the latent cluster towards which the patient is transitioning. If the next state of transition is Death, then diseases are simulated based on the current state.
 
-8.  Simulate rare diseases independently of the states to which patients belong but dependently on the patient's age. Rare diseases are drawn from a binomial distribution with parameter $p$ equal to the prevalence of such diseases stratified by age, as reported in Appendix A.
+-   Simulate the age of onset for each developed disease from a truncated beta distribution based on disease-specific parameters. The distribution is truncated so that the age of onset falls between the transition from the previous state to the following. If the computed age exceeds the age of death, the corresponding simulated disease is discarded.
 
-9.  Remove subjects who do not present multimorbidity at baseline.
+-   Simulate rare diseases independently of the multimorbidity pattern to which patients belong but dependently on the patient's age. Rare diseases are drawn from a binomial distribution with parameter $p$ equal to the prevalence of such diseases stratified by age.
 
-    ***End of the observation period***
+Remove subjects who do not present multimorbidity at baseline.
 
-10. Draw right-censoring time from a uniform distribution:\
+### ***End of the observation period***
+
+-   Draw right-censoring time from a uniform distribution:\
     $T_k \sim \text{Uniform}(0.5, 20)$.
 
-11. Compute the age of exit from the study as the minimum between the age of death and the sum of the age at entry and right censoring time.
+-   Compute the age of exit from the study as the minimum between the age of death and the sum of the age at entry and censoring time.
 
-12. Eliminate data after the age of exit (in the case of patients who leave the study before dying).
+Eliminate data after the age of exit (in the case of patients who leave the study before dying).
 
-    ***Study design***
+### ***Study design***
 
-Based on the data generation mechanism described, the underlying "true" datasets (ground truth) are obtained. Then, study design schemes are applied to derive the observed data through the study.
+The underlying "true" datasets (ground truth) are obtained based on the data generation mechanism described. Then, study design schemes are applied to derive the observed data through the study.
 
 Following a specific observation schema, visit times are recorded for each subject, and the exact onset times of diseases are replaced by binary variables indicating whether a diagnosis was observed at the visit.
 
@@ -117,8 +122,8 @@ For schema A and schema B, visit times are deterministically simulated starting 
 
 In contrast, for schema C, visit times are simulated using a Weibull distribution with parameters shape = 5 and scale = 0.4, starting from the age of entry.
 
-***Examples:***
+## ***Examples:***
 
--   **Subject A**: Diabetes onset at age 60, study entry at age 65. The diabetes diagnosis variable is set to 1 at the baseline visit (first visit in the dataset).
+-   **Subject A**: Diabetes onset at age 60, study entry at age 65. The diabetes diagnosis variable is set to 1 at the baseline visit (the first visit in the dataset).
 
 -   **Subject B**: Diabetes onset at age 65, study entry at age 62. The diabetes diagnosis variable is set to 1 at the closest visit after age 65 in a scenario without under-reporting. In a scenario with under-reporting, the diabetes diagnosis might appear later if an under-reported case is simulated for Subject B at the closest visit.

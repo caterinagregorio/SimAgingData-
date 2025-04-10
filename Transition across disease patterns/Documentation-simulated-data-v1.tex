@@ -1,0 +1,326 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Documentation simulated data MM trajectories v1},
+  pdfauthor={Caterina Gregorio, Valentina Manzoni},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Documentation simulated data MM trajectories v1}
+\author{Caterina Gregorio, Valentina Manzoni}
+\date{April 2025}
+
+\begin{document}
+\maketitle
+
+\hypertarget{data-and-organization}{%
+\section{Data and organization}\label{data-and-organization}}
+
+\hypertarget{schematic-description-of-the-scenarios}{%
+\subsection{Schematic description of the
+scenarios}\label{schematic-description-of-the-scenarios}}
+
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1222}}
+  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.2667}}
+  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1222}}
+  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1222}}
+  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1222}}
+  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1222}}
+  >{\centering\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1222}}@{}}
+\toprule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Scenario number} & \textbf{Folder name}* & \textbf{Number of
+disease patterns} & \textbf{Number of individuals} & \textbf{Observation
+scheme} & \textbf{Under reporting} & \textbf{Released} \\
+1 & schema\_xa\_3000 & 2 & 3 000 & Regular, 2 years (A) & No &
+\(\checkmark\) \\
+2 & schema\_xb\_3000 & 2 & 3 000 & Semi-regular, 3/5 years (B) & No &
+\(\checkmark\) \\
+3 & schema\_xc\_3000 & 2 & 3 000 & Irregular (C) & No &
+\(\checkmark\) \\
+4 & schema\_xa\_under\_3000 & 2 & 3 000 & Regular, 2 years (A) & Yes &
+\(\checkmark\) \\
+5 & schema\_xb\_under\_3000 & 2 & 3 000 & Semi-regular, 3/5 years (B) &
+Yes & \(\checkmark\) \\
+6 & schema\_xc\_under\_3000 & 2 & 3 000 & Irregular (C) & Yes &
+\(\checkmark\) \\
+7 & schema\_xa\_1000 & 2 & 10 000 & Regular, 2 years (A) & No &
+\(\checkmark\) \\
+8 & schema\_xb\_1000 & 2 & 10 000 & Semi-regular, 3/5 years (B) & No &
+\(\checkmark\) \\
+9 & schema\_xc\_1000 & 2 & 10 000 & Irregular (C) & No &
+\(\checkmark\) \\
+10 & schema\_xa\_under\_1000 & 2 & 10 000 & Regular, 2 years (A) & Yes
+& \\
+11 & schema\_xb\_under\_1000 & 2 & 10 000 & Semi-regular, 3/5 years (B)
+& Yes & \\
+12 & schema\_xc\_under\_1000 & 2 & 10 000 & Irregular (C) & Yes & \\
+\end{longtable}
+
+*100 datasets corresponding to different pseudo-random generations of
+the data are contained in each folder.
+
+\hypertarget{dataset-structure}{%
+\subsection{Dataset structure}\label{dataset-structure}}
+
+The structure of the datasets are coherent across scenarios. Each
+dataset is organized in a long-format i.e.~each row corresponds to a
+different visit. Subjects can have different number of rows depending on
+the scenario and time in the study. Below the variables contained in
+each dataset are described:
+
+\begin{itemize}
+\item
+  \texttt{dataset\_id} : identification number of the dataset (from 1 to
+  100).
+\item
+  \texttt{subject\_id}: identification number of the subject (from 1 to
+  the number of subjects according to the scenario.
+\item
+  \texttt{age\_baseline}: age at the entry of the study in years.
+\item
+  \texttt{age\_exit}: age at the end of the observation period (death,
+  loss to follow up or administrative end of the study) in years.
+\item
+  \texttt{dth}: binary variable indicating whether the subject died (0:
+  alive at the end of the observation period; 1 dead at the end of the
+  observation period).
+\item
+  \texttt{time\_in\_study}: time in years from the study entry until the
+  end of the observation (\texttt{age\_exit}-\texttt{age\_entry}) in
+  years.
+\item
+  \texttt{cov1}, \texttt{cov2}, \texttt{cov3}: binaries variables
+  indicating three different exposures that can be used as possible
+  predictors of transitioning between the multimorbidity states and
+  death. They are assumed to be fixed and measured at the study entry.
+\item
+  \texttt{visit\_number}: identification number for the visit.
+\item
+  \texttt{age}: age at the study visit in years.
+\item
+  \texttt{ndis}: number of prevalent diagnoses at the study visit.
+\item
+  from \texttt{anemia} to \texttt{peripheral\_vascular\_dis}: 60 binary
+  variables indicating a specific diagnosis at the study visit. All
+  diseases are assumed to be chronic and irreversible (they can't be
+  ``turned off'').
+\end{itemize}
+
+\hypertarget{description-of-the-observation-schemes}{%
+\subsection{Description of the observation
+schemes}\label{description-of-the-observation-schemes}}
+
+\begin{itemize}
+\item
+  \textbf{Schema A- Regular 2 years:} visits are every two years from
+  baseline until death/ end of the observation due to
+  loss-to-follow-up/administrative end of the study. The median number
+  of visits per subject is 5 (IQR: 3-7).
+\item
+  \textbf{Schema B- Semi-Regular similar to SNAC-K:} visits are every 6
+  years from baseline if the subject is 60-78 and every 3 years if they
+  are 78+ until death/end of the observation due to
+  loss-to-follow-up/administrative end of the study. The median number
+  of visits per subject is 2 (IQR: 2-3).
+\item
+  \textbf{Schema C - Irregular:} visits are at irregular intervals and
+  they are different among subjects. The median number of visits per
+  subject is 6 (IQR: 3-10).
+
+  \hypertarget{definition-of-under-reporting}{%
+  \subsection{Definition of
+  under-reporting}\label{definition-of-under-reporting}}
+
+  Underreporting was defined as a random selection of diagnoses for five
+  pre-specified diseases (Chronic Kidney Disease, Dementia,
+  Deafness/Hearing Loss, Depression, and Osteoarthritis/Other
+  Degenerative Joint Diseases) that were not detected during a visit.
+  For simplicity, the probability of non-detection was kept constant
+  across both time and diseases.
+\end{itemize}
+
+\hypertarget{data-generating-mechanism}{%
+\section{Data generating Mechanism}\label{data-generating-mechanism}}
+
+For each dataset \(n\) (\(n = 1,2, \dots, N\)) and for each subject
+\(k\) (\(k =1,2,\dots, N_{\text{sim}}\)):
+
+\hypertarget{population-composition}{%
+\subsubsection{\texorpdfstring{\textbf{\emph{Population
+composition}}}{Population composition}}\label{population-composition}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Draw \texttt{cov1} from a binomial distribution:\\
+  \(cov1_k \sim \text{Binomial}(p=0.45)\).
+\item
+  Draw \texttt{cov2} from a binomial distribution:\\
+  \(cov2_k \sim \text{Binomial}(p=0.15)\).
+\item
+  Draw \texttt{cov3} from a binomial distribution:\\
+  \(cov3_k \sim \tex{Binomial}(p=0.30)\).
+\item
+  Draw age at entry from a truncated gamma distribution with shape 0.9
+  and rate 0.15, constrained between 60 and 96:\\
+  \(A_k \sim \text{Gamma}(\alpha = 0.9, \beta = 0.15), \quad 60 \leq A_k \leq 96\).
+
+  \hypertarget{mm-patterns-chronic-diseases-and-survival}{%
+  \subsubsection{\texorpdfstring{\textbf{\emph{MM patterns, chronic
+  diseases and
+  survival}}}{MM patterns, chronic diseases and survival}}\label{mm-patterns-chronic-diseases-and-survival}}
+\item
+  Simulate cluster at entry in the study and then simulate the diseases
+  at baseline conditioned on the clusters to which they belong. For each
+  disease, draw from a binomial distribution with probability \(p\) from
+  the latent class model (i.e., the probability of developing a certain
+  disease given a multimorbidity cluster and the age at entry).
+\item
+  Simulate latent multimorbidity cluster trajectories using a multistate
+  model with a Gompertz hazard, adjusted for the three binary
+  covariates.
+\item
+  Simulate the prevalent diseases (among those the patient has not yet
+  developed), conditioned on the latent cluster towards which the
+  patient is transitioning. If the next state of transition is Death,
+  then diseases are simulated based on the current state.
+\item
+  Simulate the age of onset for each developed disease from a truncated
+  beta distribution based on disease-specific parameters. The
+  distribution is truncated so that the age of onset falls between the
+  transition from the previous state to the following. If the computed
+  age exceeds the age of death, the corresponding simulated disease is
+  discarded.
+\item
+  Simulate rare diseases independently of the multimorbidity pattern to
+  which patients belong but dependently on the patient's age. Rare
+  diseases are drawn from a binomial distribution with parameter \(p\)
+  equal to the prevalence of such diseases stratified by age.
+\item
+  Remove subjects who do not present multimorbidity at baseline.
+
+  \hypertarget{end-of-the-observation-period}{%
+  \subsubsection{\texorpdfstring{\textbf{\emph{End of the observation
+  period}}}{End of the observation period}}\label{end-of-the-observation-period}}
+\item
+  Draw right-censoring time from a uniform distribution:\\
+  \(T_k \sim \text{Uniform}(0.5, 20)\).
+\item
+  Compute the age of exit from the study as the minimum between the age
+  of death and the sum of the age at entry and censoring time.
+\item
+  Eliminate data after the age of exit (in the case of patients who
+  leave the study before dying).
+
+  \hypertarget{study-design}{%
+  \subsubsection{\texorpdfstring{\textbf{\emph{Study
+  design}}}{Study design}}\label{study-design}}
+\end{enumerate}
+
+Based on the data generation mechanism described, the underlying
+``true'' datasets (ground truth) are obtained. Then, study design
+schemes are applied to derive the observed data through the study.
+
+Following a specific observation schema, visit times are recorded for
+each subject, and the exact onset times of diseases are replaced by
+binary variables indicating whether a diagnosis was observed at the
+visit.
+
+For schema A and schema B, visit times are deterministically simulated
+starting from the age of entry into the study.
+
+In contrast, for schema C, visit times are simulated using a Weibull
+distribution with parameters shape = 5 and scale = 0.4, starting from
+the age of entry.
+
+\hypertarget{examples}{%
+\subsection{\texorpdfstring{\textbf{\emph{Examples:}}}{Examples:}}\label{examples}}
+
+\begin{itemize}
+\item
+  \textbf{Subject A}: Diabetes onset at age 60, study entry at age 65.
+  The diabetes diagnosis variable is set to 1 at the baseline visit
+  (first visit in the dataset).
+\item
+  \textbf{Subject B}: Diabetes onset at age 65, study entry at age 62.
+  The diabetes diagnosis variable is set to 1 at the closest visit after
+  age 65 in a scenario without under-reporting. In a scenario with
+  under-reporting, the diabetes diagnosis might appear later if an
+  under-reported case is simulated for Subject B at the closest visit.
+\end{itemize}
+
+\end{document}
