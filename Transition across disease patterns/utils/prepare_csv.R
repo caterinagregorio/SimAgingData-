@@ -15,7 +15,8 @@ data_ready <- input %>% filter(dataset_id==x) %>%
          cov2=educ_el,
          age_baseline=Age_entry) %>%
   mutate(age_exit=Age_exit,
-         dht=ifelse(Age_exit==Age_death,1,0)) %>% 
+         dht=ifelse(Age_exit==Age_death,1,0),
+         time_in_study=age_exit-age_baseline) %>% 
   select(-Age_death,-Age_exit,-contains("MP"),-lag_age,-age_group) %>% 
   select(dataset_id,subject_id,age_baseline,age_exit,time_in_study,dht,cov1,cov2,cov3,visit_number,age,ndis,everything())
 print(colnames(data_ready))

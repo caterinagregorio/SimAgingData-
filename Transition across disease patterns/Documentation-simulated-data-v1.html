@@ -1816,22 +1816,22 @@ are every 6 years from baseline if the subject is 60-78 and every 3
 years if they are 78+ until death/end of the observation due to
 loss-to-follow-up/administrative end of the study. The median number of
 visits per subject is 2 (IQR: 2-3).</p></li>
-<li><p><strong>Schema C - Irregular:</strong> visits are at irregular
+</ul>
+<p><strong>Schema C - Irregular:</strong> visits are at irregular
 intervals and they are different among subjects. The median number of
 visits per subject is 6 (IQR: 3-10).</p>
-<h2 id="definition-of-under-reporting">Definition of
-under-reporting</h2>
+</div>
+<div id="definition-of-under-reporting" class="section level2">
+<h2>Definition of under-reporting</h2>
 <p>Underreporting was defined as a random selection of diagnoses for
 five pre-specified diseases (Chronic Kidney Disease, Dementia,
 Deafness/Hearing Loss, Depression, and Osteoarthritis/Other Degenerative
 Joint Diseases) that were not detected during a visit. For simplicity,
 the probability of non-detection was kept constant across both time and
-diseases.</p></li>
-</ul>
+diseases.</p>
 </div>
-</div>
-<div id="data-generating-mechanism" class="section level1">
-<h1>Data generating Mechanism</h1>
+<div id="data-generating-mechanism" class="section level2">
+<h2>Data generating Mechanism</h2>
 <p>For each dataset <span class="math inline">\(n\)</span> (<span class="math inline">\(n = 1,2, \dots, N\)</span>) and for each subject
 <span class="math inline">\(k\)</span> (<span class="math inline">\(k
 =1,2,\dots, N_{\text{sim}}\)</span>):</p>
@@ -1846,7 +1846,7 @@ diseases.</p></li>
 \text{Binomial}(p=0.15)\)</span>.</p></li>
 <li><p>Draw <code>cov3</code> from a binomial distribution:<br />
 <span class="math inline">\(cov3_k \sim
-\tex{Binomial}(p=0.30)\)</span>.</p></li>
+\text{Binomial}(p=0.30)\)</span>.</p></li>
 </ul>
 <p>Draw age at entry from a truncated gamma distribution with shape 0.9
 and rate 0.15, constrained between 60 and 96:<br />
@@ -1911,6 +1911,7 @@ simulated starting from the age of entry into the study.</p>
 <p>In contrast, for schema C, visit times are simulated using a Weibull
 distribution with parameters shape = 5 and scale = 0.4, starting from
 the age of entry.</p>
+</div>
 </div>
 <div id="examples" class="section level2">
 <h2><strong><em>Examples:</em></strong></h2>

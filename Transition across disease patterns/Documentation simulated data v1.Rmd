@@ -65,13 +65,13 @@ The structure of the datasets are coherent across scenarios. Each dataset is org
 
 -   **Schema B- Semi-Regular similar to SNAC-K:** visits are every 6 years from baseline if the subject is 60-78 and every 3 years if they are 78+ until death/end of the observation due to loss-to-follow-up/administrative end of the study. The median number of visits per subject is 2 (IQR: 2-3).
 
--   **Schema C - Irregular:** visits are at irregular intervals and they are different among subjects. The median number of visits per subject is 6 (IQR: 3-10).
+**Schema C - Irregular:** visits are at irregular intervals and they are different among subjects. The median number of visits per subject is 6 (IQR: 3-10).
 
-    ## Definition of under-reporting
+## Definition of under-reporting
 
-    Underreporting was defined as a random selection of diagnoses for five pre-specified diseases (Chronic Kidney Disease, Dementia, Deafness/Hearing Loss, Depression, and Osteoarthritis/Other Degenerative Joint Diseases) that were not detected during a visit. For simplicity, the probability of non-detection was kept constant across both time and diseases.
+Underreporting was defined as a random selection of diagnoses for five pre-specified diseases (Chronic Kidney Disease, Dementia, Deafness/Hearing Loss, Depression, and Osteoarthritis/Other Degenerative Joint Diseases) that were not detected during a visit. For simplicity, the probability of non-detection was kept constant across both time and diseases.
 
-# Data generating Mechanism
+## Data generating Mechanism
 
 For each dataset $n$ ($n = 1,2, \dots, N$) and for each subject $k$ ($k =1,2,\dots, N_{\text{sim}}$):
 
@@ -84,7 +84,7 @@ For each dataset $n$ ($n = 1,2, \dots, N$) and for each subject $k$ ($k =1,2,\do
     $cov2_k \sim \text{Binomial}(p=0.15)$.
 
 -   Draw `cov3` from a binomial distribution:\
-    $cov3_k \sim \tex{Binomial}(p=0.30)$.
+    $cov3_k \sim \text{Binomial}(p=0.30)$.
 
 Draw age at entry from a truncated gamma distribution with shape 0.9 and rate 0.15, constrained between 60 and 96:\
 $A_k \sim \text{Gamma}(\alpha = 0.9, \beta = 0.15), \quad 60 \leq A_k \leq 96$.
